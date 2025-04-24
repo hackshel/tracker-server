@@ -1,0 +1,28 @@
+#debug or release
+RUN_MODE: release
+APP:
+  PAGE_SIZE:  10
+  JWT_SECRET: NzYyNGI5MTUwMDU2ZmYwMiAgLQo=
+
+SERVER:
+  HTTP_PORT: 10080 
+  READ_TIMEOUT: 60
+  WRITE_TIMEOUT:  60
+
+DATABASE:
+  TYPE: mysql
+  USER: root
+  PASSWORD: MySQL8.cf-noc.com
+  HOST: localhost:3308
+  NAME: cft_kdmsigner
+  TABLE_PREFIX: ks_
+
+REMOTE:
+  URL: https://api2.zyhxjh.com/public/kdmgen_outlet/zykj/gen
+  BASE_URL: https://api2.zyhxjh.com/
+  SIG: 208563b4-c3cc-4ee7-974a-15e0ac45491a
+
+
+
+
+
