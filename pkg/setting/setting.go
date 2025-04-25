@@ -29,6 +29,7 @@ var (
 
 	DSN          string
 	TABLE_PREFIX string
+	MaxPeers     int
 )
 
 func init() {
@@ -70,6 +71,8 @@ func LoadServer() {
 	WriteTimeout = time.Duration(sec.Key("WRITE_TIMEOUT").MustInt(60)) * time.Second
 
 	TrackerURL = sec.Key("TRACKER_URL").MustString("default")
+
+	MaxPeers = sec.Key("MAX_PEERS").MustInt(50)
 }
 
 func LoadApp() {

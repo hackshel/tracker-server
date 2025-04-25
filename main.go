@@ -40,6 +40,8 @@ func main() {
 	db := setupDatabase()
 	router.Use(middleware.DBMiddleware(db))
 	router.POST("/api/v1/login", controllers.Login)
+	router.GET("/api/v1/tracker/announce", controllers.Announce)
+	router.GET("/api/v1/tracker/scrape", controllers.Scrape)
 
 	api := router.Group("/api/v1")
 

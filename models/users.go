@@ -39,3 +39,11 @@ func GetUserByUserID(db *gorm.DB, userID string) (*Users, error) {
 	}
 	return &user, nil
 }
+
+func UserGetByPasskey(db *gorm.DB, passkey string) (*Users, error) {
+	var user Users
+	if err := db.Where("passkey = ?", passkey).First(&user).Error; err != nil {
+		return nil, err
+	}
+	return &user, nil
+}

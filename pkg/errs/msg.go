@@ -41,6 +41,35 @@ var MsgFlags = map[int]string{
 	ERROR_UPLOAD_SECCESS:            "上传成功",
 	ERROR_ENCODE_FAILD:              "种子文件编码Bencode失败",
 	ERROR_COUNT:                     "计算种子数量失败",
+	ERROR_GET_PEERS_DB:              "从数据库获取PEERS 报错",
+
+	MSG_INVALID_REQ_TYPE:   "客户端请求类型错误",
+	MSG_MISSING_INFOHASH:   "no info_hash in request", //请求中没有info_hash
+	MSG_MISSING_PEERID:     "no peer_id in request",   //请求中没有peer_id
+	MSG_MISSING_PORT:       "no port in request",      //请求中没有端口号
+	MSG_INVALID_PORT:       "invild port ",
+	MSG_MISSING_DL:         "missing downloaded value",
+	MSG_MISSING_UL:         "missing uploaded value",
+	MSG_MISSING_LEFT:       "missing left value",
+	MSG_MISSING_KEY:        "missing key value",
+	MSG_INVALID_INFOHASH:   "invild info_hash", //的info_hash
+	MSG_INVALID_PEERID:     "无效的Peer_id",
+	MSG_INVALID_NUMWANT:    "无效的NumWant",
+	MSG_BAD_CLIENT:         "非法客户端",
+	MSG_INFOHASH_NOT_FOUND: "未知的info_hash",
+	MSG_INVALID_AUTH:       "client request not passkey", // 客户端请求没有passkey ，鉴权失败
+	//MSG_CLIENT_REQUEST_TOO_FAST: "客户端请求过快",
+	MSG_GENERIC_ERROR:         "未知的错误，自动返回错误",
+	MSG_MALFORMED_REQUEST:     "有问题的请求",
+	MSG_QUERY_PARSE_FAIL:      "处理参数失败",
+	MSG_PASSKEY_ERR:           "Passkey 长度小于40，错误Passkey",
+	MSG_PORT_BANED:            "端口被Ban",
+	MSG_OUT_MIN_ANNOUNCE_TIME: "超时 最小announce time",
+	MSG_INSERT_PEER_ERR:       "插入peer 到数据库错误",
+	MSG_ADD_PEER_ERR:          "insert client to tk_peers error.",
+	MSG_UPDATE_PEER_ERR:       "PL Err 1",
+	MSG_REMOVE_PEER_FAILD:     "D Err 1",
+	MSG_UPDATE_TORRENT_ERR:    "update torrent table error",
 }
 
 func GetMsg(code int) string {
