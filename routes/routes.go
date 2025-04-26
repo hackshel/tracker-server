@@ -9,4 +9,5 @@ func RegisterAPIRoutes(rg *gin.RouterGroup) {
 	RegisterTorrentRoutes(rg)
 	// RegisterArticleRoutes(rg)
 	// RegisterCommentRoutes(rg)
+	RegisterHospitalRoutes(rg)
 }

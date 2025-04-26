@@ -11,9 +11,10 @@ users = [
 for user in users:
 
     salt = bcrypt.gensalt()
+    print(salt, len(salt))
     password = bytes(user["password"], encoding = "utf8")
     hashed_password = bcrypt.hashpw(password, salt)
-    print(salt, hashed_password)
+    print(salt, len(salt), hashed_password, len(hashed_password))
 
 
     password_to_check = bytes(user["password"], encoding = "utf8")

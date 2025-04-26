@@ -342,7 +342,7 @@ func TorrentUpload(c *gin.Context) {
 		Added_time:      time.Now(),
 		Dcp_type:        "single",
 		Numfiles:        f_cnt,
-		Tracker_url:     "https://tracker.jiujinmax.com/api/v1/tracker/announce",
+		Tracker_url:     setting.TrackerURL + "/api/v1/tracker/announce",
 		F_sha1:          file_sha1,
 		Seeders:         0,
 		Leechers:        0,

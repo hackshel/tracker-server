@@ -24,10 +24,12 @@ var MsgFlags = map[int]string{
 	ERROR_AUTH:                     "Token错误",
 	ERROR_AUTH_HEADER:              "auth Header 丢失或无效", // "error": "Authorization header missing or invalid"
 
-	ERROR_USER:           "用户不存在",
-	ERROR_USER_PASSWD:    "用户密码错误",
-	ERROR_GEN_TOKEN:      "创建JWT TOKEN 失败",
-	ERROR_USER_NOT_FOUND: "没有找到用户",
+	ERROR_USER:              "用户不存在",
+	ERROR_USER_PASSWD:       "用户密码错误",
+	ERROR_GEN_TOKEN:         "创建JWT TOKEN 失败",
+	ERROR_USER_NOT_FOUND:    "没有找到用户",
+	ERROR_PASSWD_HASH_FAILD: "用户密码加密失败",
+	ERROR_ADD_USER_FAILD:    "增加用户失败",
 
 	ERROR_TORRENT_INFO:              "提交的torrent_id 和 hash_info 错误",
 	ERROR_TORRENT_NOT_FOUND:         "Torrent 没有找到",
@@ -42,6 +44,13 @@ var MsgFlags = map[int]string{
 	ERROR_ENCODE_FAILD:              "种子文件编码Bencode失败",
 	ERROR_COUNT:                     "计算种子数量失败",
 	ERROR_GET_PEERS_DB:              "从数据库获取PEERS 报错",
+	ERROR_USER_ROLE:                 "您没有权限",
+	ERROR_USER_LIST_FAILD:           "列表用户报错",
+	ERROR_USER_DEL:                  "删除用户失败",
+	ERROR_INVALID_DATA:              "提交的数据格式有误",
+	ERROR_ADD_HOSPITAIL_FAILD:       "增加医院信息失败",
+	ERROR_HOSPITAIL_DEL:             "删除医院失败",
+	ERROR_USER_UPDATE_CDDE:          "更新用户和医院编码失败",
 
 	MSG_INVALID_REQ_TYPE:   "客户端请求类型错误",
 	MSG_MISSING_INFOHASH:   "no info_hash in request", //请求中没有info_hash
