@@ -13,6 +13,7 @@ func RegisterTorrentRoutes(rg *gin.RouterGroup) {
 		user.GET("/download", controllers.TorrenDownload)
 		user.POST("/upload", controllers.TorrentUpload)
 		user.GET("/count", controllers.TorrentsCount)
+		user.POST("/delete", controllers.TorrentDelete)
 
 		// 可以继续加更多接口
 	}

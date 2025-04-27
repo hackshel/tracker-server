@@ -113,6 +113,24 @@ func Profile(c *gin.Context) {
 
 func Logout(c *gin.Context) {
 
+	user_id := c.GetString("userID")
+	db := c.MustGet("db").(*gorm.DB)
+	userid_int, _ := strconv.ParseInt(user_id, 10, 64)
+
+	log := models.AuditLogs{
+		UserID:         userid_int,
+		OperationType:  "LOGOUT",
+		TargetTorrent:  0,
+		Detail:         "LOGOUT",
+		Timestamp:      time.Now(),
+		BlockchainHash: "",
+	}
+
+	err := models.AddLogs(db, log)
+	if err != nil {
+		fmt.Printf("Logout system!\n")
+	}
+
 }
 
 type ListUsrRequest struct {

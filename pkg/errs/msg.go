@@ -51,6 +51,8 @@ var MsgFlags = map[int]string{
 	ERROR_ADD_HOSPITAIL_FAILD:       "增加医院信息失败",
 	ERROR_HOSPITAIL_DEL:             "删除医院失败",
 	ERROR_USER_UPDATE_CDDE:          "更新用户和医院编码失败",
+	ERROR_TORRENT_DEL_FAILD:         "删除数据库种子文件失败",
+	ERROR_TORRENT_RM_FAILD:          "磁盘删除种子文件失败",
 
 	MSG_INVALID_REQ_TYPE:   "客户端请求类型错误",
 	MSG_MISSING_INFOHASH:   "no info_hash in request", //请求中没有info_hash

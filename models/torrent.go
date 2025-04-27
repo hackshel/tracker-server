@@ -119,3 +119,20 @@ func UpdateTorrent(db *gorm.DB, update_set []string, torrent_id int64) error {
 	return err
 
 }
+
+func GetTorrentByID(db *gorm.DB, torrentID int64) (*Torrents, error) {
+	var torrent Torrents
+	err := db.Where("torrent_id = ?", torrentID).First(&torrent).Error
+	if err != nil {
+		return nil, err
+	}
+	return &torrent, nil
+}
+
+func DeleteTorrentByTorrentID(db *gorm.DB, torrent_id int64) error {
+	var torrent Torrents
+	r := db.Where("torrent_id = ?", torrent_id).Delete(&torrent)
+
+	return r.Error
+
+}

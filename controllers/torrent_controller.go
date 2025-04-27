@@ -167,6 +167,25 @@ func TorrenDownload(c *gin.Context) {
 	TorrentID, _ := strconv.ParseInt(TorrentIDStr, 10, 64)
 	db := c.MustGet("db").(*gorm.DB)
 
+	// add logs 20250427
+	user_id := c.GetString("userID")
+	fmt.Printf("userid ==> %v , type %T\n", user_id, user_id)
+	userid_int, _ := strconv.ParseInt(user_id, 10, 64)
+
+	log := models.AuditLogs{
+		UserID:         userid_int,
+		OperationType:  "DOWNLOAD",
+		TargetTorrent:  TorrentID,
+		Detail:         "DOWNLOAD",
+		Timestamp:      time.Now(),
+		BlockchainHash: "",
+	}
+	log_err := models.AddLogs(db, log)
+	if log_err != nil {
+		fmt.Printf("Logout system!\n")
+	}
+	// end logs
+
 	// torrent, err := models.GetTorrentByIDAndHash(db, req.TorrentID, req.InfoHash)
 	// fmt.Printf("torrent info %v, type %T \n", torrent, torrent)
 	torrent, err := models.GetTorrentByIDAndHash(db, TorrentID, InfoHash)
@@ -358,6 +377,20 @@ func TorrentUpload(c *gin.Context) {
 		})
 		return
 	}
+	// add logs 20250427
+
+	log := models.AuditLogs{
+		UserID:         userid_int,
+		OperationType:  "UPLOAD",
+		TargetTorrent:  t.Torrent_id,
+		Detail:         "UPLOAD",
+		Timestamp:      time.Now(),
+		BlockchainHash: "",
+	}
+	log_err := models.AddLogs(db, log)
+	if log_err != nil {
+		fmt.Printf("Logout system!\n")
+	}
 
 	c.JSON(http.StatusOK, gin.H{
 		"error_code": errs.ERROR_UPLOAD_SECCESS,
@@ -365,6 +398,79 @@ func TorrentUpload(c *gin.Context) {
 		"torrent_id": t.Torrent_id,
 	})
 
+}
+
+type TorrentDeleteRequest struct {
+	TorrentId int64 `json:"torrent_id"`
+}
+
+func TorrentDelete(c *gin.Context) {
+
+	var req TorrentDeleteRequest
+	userID := c.GetString("userID")
+	//username := c.GetString("username")
+	userid_int, _ := strconv.ParseInt(userID, 10, 64)
+
+	// 绑定 JSON 数据
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error_code": errs.ERROR_TORRENT_INFO,
+			"error_msg":  errs.GetMsg(errs.ERROR_TORRENT_INFO),
+		})
+		return
+	}
+	db := c.MustGet("db").(*gorm.DB)
+
+	torrent, err := models.GetTorrentByID(db, req.TorrentId)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error_code": errs.ERROR_TORRENT_NOT_FOUND,
+			"error_msg":  errs.GetMsg(errs.ERROR_TORRENT_NOT_FOUND),
+		})
+		return
+	}
+	//删除磁盘文件
+	savePath := filepath.Join(setting.TorrentSavePath, torrent.Filename)
+
+	rm_err := os.Remove(savePath)
+	if rm_err != nil {
+		fmt.Println("删除失败:", rm_err)
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error_code": errs.ERROR_TORRENT_RM_FAILD,
+			"error_msg":  errs.GetMsg(errs.ERROR_TORRENT_RM_FAILD),
+		})
+
+		return
+	}
+
+	// add logs 20250427
+
+	log := models.AuditLogs{
+		UserID:         userid_int,
+		OperationType:  "DELETE",
+		TargetTorrent:  req.TorrentId,
+		Detail:         "DELETE",
+		Timestamp:      time.Now(),
+		BlockchainHash: "",
+	}
+	log_err := models.AddLogs(db, log)
+	if log_err != nil {
+		fmt.Printf("Logout system!\n")
+	}
+	del_db_err := models.DeleteTorrentByTorrentID(db, req.TorrentId)
+
+	if del_db_err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error_code": errs.ERROR_TORRENT_DEL_FAILD,
+			"error_msg":  errs.GetMsg(errs.ERROR_TORRENT_DEL_FAILD),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"error_code": errs.SUCCESS,
+		"error_msg":  errs.GetMsg(errs.SUCCESS),
+	})
 }
 
 func GetTorrentSHA1(filepath string) string {

@@ -26,6 +26,7 @@ func setupDatabase() *gorm.DB {
 			TablePrefix:   setting.TABLE_PREFIX, // 表前缀
 			SingularTable: true,                 // 表名是否使用单数，例如：User -> user（默认 false，即复数 users）
 		},
+		//Logger: logger.Default.LogMode(logger.Info),
 	})
 	if db_err != nil {
 		log.Fatalf("db init error ... %v", db_err)
